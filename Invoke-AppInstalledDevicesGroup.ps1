@@ -43,7 +43,7 @@ function Invoke-AppInstalledDevicesGroup {
             $DetectedInstallHostnames = $DetectedInstalls | ForEach-Object {
                 $DetectedInstall = $_
                 Get-MgBetaDeviceManagementDetectedAppManagedDevice -DetectedAppId $DetectedInstall.id -ErrorAction Stop | Select-Object DeviceName
-            }
+            } | Select-Object DeviceName -Unique
 
             # Define group details
             $GroupName = "$($AppDisplayName -replace '[^a-zA-Z0-9]', '')_Installed_Devices" # Remove space and characters for MailNickname
@@ -63,7 +63,7 @@ function Invoke-AppInstalledDevicesGroup {
                     GroupTypes      = @()
                 }
                 $Group = New-MgBetaGroup @GroupParams
-                Write-Host "Group '$GroupName' created."
+                Write-Host "Device Group '$GroupName' created."
             }
 
             # Get current members of the group
