@@ -42,7 +42,7 @@ function Invoke-AppInstalledDevicesGroup {
             # Retrieve hostnames of devices where the application is detected
             $DetectedInstallHostnames = $DetectedInstalls | ForEach-Object {
                 $DetectedInstall = $_
-                Get-MgBetaDeviceManagementDetectedAppManagedDevice -DetectedAppId $DetectedInstall.id -ErrorAction Stop
+                Get-MgBetaDeviceManagementDetectedAppManagedDevice -DetectedAppId $DetectedInstall.id -ErrorAction Stop | Select-Object DeviceName
             }
 
             # Define group details
@@ -114,6 +114,3 @@ function Invoke-AppInstalledDevicesGroup {
         Write-Warning "$($error[0].exception.message)"
     }
 }
-
-
-Invoke-AppInstalledDevicesGroup -AppDisplayName "Adobe Acrobat (64-bit)"
