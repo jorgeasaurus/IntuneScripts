@@ -74,8 +74,7 @@ if (-not $deviceGroup) {
 # Step 3. Get all user members from the user group.
 ###############################################################################
 
-$userMembers = Get-MgBetaGroupMember -GroupId $userGroup.Id -All |
-Where-Object { $_.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user" }
+$userMembers = Get-MgBetaGroupMemberAsUser -GroupId $userGroup.Id -All
 Write-Output "Found $($userMembers.Count) user(s) in group '$UserGroupName'."
 
 
