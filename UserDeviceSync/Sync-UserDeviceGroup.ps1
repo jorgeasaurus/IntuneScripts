@@ -74,8 +74,7 @@ if (-not $deviceGroup) {
 # Step 3. Get all user members from the user group.
 ###############################################################################
 
-$userMembers = Get-MgBetaGroupMember -GroupId $userGroup.Id -All |
-Where-Object { $_.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user" }
+$userMembers = Get-MgBetaGroupMemberAsUser -GroupId $userGroup.Id -All
 Write-Output "Found $($userMembers.Count) user(s) in group '$UserGroupName'."
 
 
@@ -120,8 +119,7 @@ Write-Output "Total unique desired device count: $($desiredDeviceIds.Count)"
 # Step 5. Get the current devices in the device group.
 ###############################################################################
 
-$currentDevices = Get-MgBetaGroupMember -GroupId $deviceGroup.Id -All |
-Where-Object { $_.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.device" }
+$currentDevices = Get-MgBetaGroupMemberAsDevice -GroupId $deviceGroup.Id -All
 $currentDeviceIds = $currentDevices | ForEach-Object { $_.AdditionalProperties.deviceId }
 Write-Output "Current device group contains $($currentDeviceIds.Count) device(s)."
 
